@@ -24,7 +24,7 @@ class LETS_FIND_SOME_PSLs:
 
 	def __init__ (self):
 		self.STARBUCKS_LATTE_PAGE = "https://www.starbucks.com/menu/catalog/product?drink=espresso#view_control=product"
-		self.PSLs = ["icedstarbucks®blondevanillabeancoconutmilk"]#["pumpkin", "pumpkinspice", "pumpkinspicelatte"]
+		self.PSLs = ["pumpkin", "pumpkinspice", "pumpkinspicelatte"]
 		self.RES = requests.get(self.STARBUCKS_LATTE_PAGE)
 		self.SOUP = BeautifulSoup(self.RES.text, 'html.parser')
 		self.DRINKS = self.SOUP.find_all('dd') 
