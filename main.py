@@ -38,7 +38,7 @@ class LETS_FIND_SOME_PSLs:
 					self.LET_EVERYONE_KNOW.NOW()
 					return f'HEY! I JUST FOUND OUT THAT {self.PSLs} ARE OUT! \
 							AND Its called {DRINK.text}!'
-		return f'Succes. But sadly I did not find any PSLs'
+		return f'Success. But sadly I did not find any PSLs'
 					
                     
 def run(request):
