@@ -15,6 +15,7 @@ class LET_EVERYONE_KNOW:
 
 	def NOW(self):
 		for addict in self.addicts:
+			print(f'Messsaging {addict}')
 			self.client.messages.create(
 				body="HEY! I think that PSLs are out!",
 				to=addict,
@@ -23,18 +24,24 @@ class LET_EVERYONE_KNOW:
 class LETS_FIND_SOME_PSLs:
 
 	def __init__ (self):
-		self.STARBUCKS_LATTE_PAGE = "https://www.starbucks.com/menu/catalog/product?drink=espresso#view_control=product"
+		self.STARBUCKS_LATTE_PAGE = "https://www.starbucks.com/menu/drinks/hot-coffees"
 		self.PSLs = ["pumpkin", "pumpkinspice", "pumpkinspicelatte"]
 		self.RES = requests.get(self.STARBUCKS_LATTE_PAGE)
 		self.SOUP = BeautifulSoup(self.RES.text, 'html.parser')
-		self.DRINKS = self.SOUP.find_all('dd') 
+		print(self.SOUP)
+		# self.DRINKS = self.SOUP.find_all('navOffsetContainer___2wNOX')
+		# self.DRINKS = self.SOUP.find_all('div', attrs={'class': 'navOffsetContainer___2wNOX'})
+		self.DRINKS = self.SOUP.find_all('data-e2e')
+		# 'div', attrs = {'class': 'product__title ui-body-text'})
+		print(self.DRINKS)
 		self.ITS_CALLED_WHAT = lambda x: x.strip().lower().replace(' ','')
 		self.LET_EVERYONE_KNOW = LET_EVERYONE_KNOW()
 
 	def GET_THOSE_PSLs(self):
+		# self.LET_EVERYONE_KNOW.NOW()
 		for DRINK in self.DRINKS:
 			for WHERE_ARE_THE_PSLs in self.PSLs:
-				if self.ITS_CALLED_WHAT(WHERE_ARE_THE_PSLs) in self.ITS_CALLED_WHAT(DRINK.text):
+				if self.ITS_CALLED_WHAT(WHERE_ARE_THE_PSLs) not in self.ITS_CALLED_WHAT(DRINK.text):
 					self.LET_EVERYONE_KNOW.NOW()
 					return f'HEY! I JUST FOUND OUT THAT {self.PSLs} ARE OUT! \
 							AND Its called {DRINK.text}!'
@@ -47,3 +54,11 @@ def run(request):
 		return _obj.GET_THOSE_PSLs()
 	except Exception as e:
 		return f'{e}'
+
+if __name__ == '__main__':
+	try:
+		_obj = LETS_FIND_SOME_PSLs()
+		res = _obj.GET_THOSE_PSLs()
+		print(res)
+	except Exception as e:
+		print(f'{e}')
